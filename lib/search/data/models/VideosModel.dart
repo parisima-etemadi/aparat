@@ -1,4 +1,4 @@
-class VideoModel{
+class VideoModel {
  final String title;
  final String small_poster;
  final String username;
