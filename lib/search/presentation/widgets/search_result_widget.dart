@@ -7,7 +7,13 @@ class SearchResultWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(children: [
       SearchBar(),
-
+      // GridView.builder(
+      //   itemCount: 10,
+      //   itemBuilder: (context, index) => Text("ds",style: TextStyle(color: Colors.black),),
+      //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      //     crossAxisCount: 2,
+      //   ),
+      // )
     ],);
   }
 }
