@@ -1,5 +1,7 @@
-import 'package:aparat/search/presentation/widgets/play_screen_display.dart';
+
 import 'package:flutter/material.dart';
+
+import '../widgets/play_screen_display.dart';
 
 class PlayScreenPage extends StatelessWidget {
   const PlayScreenPage({Key? key}) : super(key: key);

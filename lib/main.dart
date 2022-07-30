@@ -1,13 +1,13 @@
 
-import 'package:aparat/search/data/repository.dart';
-import 'package:aparat/search/presentation/pages/play_screen.dart';
+import 'package:aparat/search/data/data%20provider/Video_data_provider_by_search.dart';
+import 'package:aparat/search/ui/pages/search_result_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MyApp());
 
-  AparatApi aparatApi=new AparatApi();
-  aparatApi.getData();
+  VideoDataProvider aparatApi=new VideoDataProvider();
+  aparatApi.getVideosBySearch('parisima');
 
 }
 
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home:  PlayScreenPage(),
+      home:  SearchResultPage(),
     );
   }
 }
