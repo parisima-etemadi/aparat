@@ -6,14 +6,19 @@ class SearchResultWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      SearchBar(),
-      // GridView.builder(
-      //   itemCount: 10,
-      //   itemBuilder: (context, index) => Text("ds",style: TextStyle(color: Colors.black),),
-      //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-      //     crossAxisCount: 2,
-      //   ),
-      // )
+     // SearchBar(),
+      Container(
+        height: 200,
+
+        child: GridView.builder(
+
+          itemCount: 10,
+          itemBuilder: (context, index) => Text("ds",style: TextStyle(color: Colors.black),),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+          ),
+        ),
+      )
     ],);
   }
 }
