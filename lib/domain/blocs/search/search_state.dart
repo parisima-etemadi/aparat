@@ -9,6 +9,16 @@ class SearchNotFound extends SearchState{}
 
 class SearchError extends SearchState{}
 
-class SearchLoaded extends SearchState{}
+
+class SearchLoaded extends SearchState{
+  final List<VideoModel> videos;
+
+  SearchLoaded(this.videos);
+}
 
 class SearchLoading extends SearchState{}
+
+class LoadeMore extends SearchState{
+
+}
+

@@ -1,8 +1,0 @@
-class Video{
-  String? id;
-
-
-
-
-
-}
