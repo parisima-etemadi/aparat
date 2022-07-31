@@ -44,6 +44,8 @@ ScrollController _scrollController=ScrollController();
                       if(_scrollController.position.pixels ==_scrollController.position.maxScrollExtent ){
                         _getMoreInfo();
 
+
+
                       }
 
                     }),
