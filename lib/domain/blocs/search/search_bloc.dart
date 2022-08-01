@@ -13,7 +13,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final VideoRepository videoRepository;
    List<VideoModel> listVideos=[];
    String search="";
-   int videoPerPage=10;
+   int videoPerPage=1;
    bool isfetch=false;
 
 
@@ -23,14 +23,15 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         //   if(search?.length <=1){
         //     emit(SearchError());
         //   }
-        //    if(search?.isNotEmpty && search?.length >=2){
-      //  emit(SearchLoading());
+        // if(search?.isNotEmpty && search?.length >=2){
+       // emit(SearchLoading());
         List<VideoModel> listVideo = await videoRepository.getVideoBySearch(search, videoPerPage);
         listVideos.addAll(listVideo);
         emit(SearchLoaded(listVideos));
 
           videoPerPage+=1;
 
+          print("videoPerPage"+videoPerPage.toString());
     // }
 
       }
@@ -44,5 +45,10 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
 
     });
+
+    //two function for searching delete list
   }
+
+
+
 }

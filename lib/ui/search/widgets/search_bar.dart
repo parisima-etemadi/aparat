@@ -15,12 +15,13 @@ class _SearchBarState extends State<SearchBar> {
   @override
   Widget build(BuildContext context) {
     return  Container(
-
+            margin: EdgeInsets.symmetric(horizontal: 10,vertical: 20),
             width: double.infinity,
             height: 40,
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(5)),
             child: Container(
+
               child: TextField(
 
                 controller: textFieldController,
@@ -42,13 +43,18 @@ class _SearchBarState extends State<SearchBar> {
                         ));
                       }
                       BlocProvider.of<SearchBloc>(context)
+                        ..listVideos = []
+                        ..add(SearchingVideo());
+
+                      BlocProvider.of<SearchBloc>(context)
                         ..search = textFieldController.text
                         ..add(SearchingVideo());
+
                     },),
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.clear),
                       onPressed: () {
-
+                       // textFieldController.text="";
                       },
                     ),
                     hintText: 'Search...',
