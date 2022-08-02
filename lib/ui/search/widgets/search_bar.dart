@@ -1,7 +1,10 @@
+import 'package:aparat/domain/blocs/search/search_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/blocs/search/search_bloc.dart';
+import '../../../domain/blocs/search/search_bloc.dart';
+
 class SearchBar extends StatefulWidget {
   const SearchBar({Key? key}) : super(key: key);
 
@@ -10,58 +13,57 @@ class SearchBar extends StatefulWidget {
 }
 
 class _SearchBarState extends State<SearchBar> {
-  String keyWord="";
+  String keyWord = "";
+
   final textFieldController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return  Container(
-            margin: EdgeInsets.symmetric(horizontal: 10,vertical: 20),
-            width: double.infinity,
-            height: 40,
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(5)),
-            child: Container(
+    final searchBloc = BlocProvider.of<SearchBloc>(context);
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+      width: double.infinity,
+      height: 40,
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(5)),
+      child: TextField(
+        controller: textFieldController,
+        decoration: InputDecoration(
+            prefixIcon: IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                if (textFieldController.text.isEmpty) {
+                  // context.read()<SearchBloc>.add(SearchingVideo(textFieldController.text).)
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text("please fill the search bar 😇"),
+                  ));
+                } else if (textFieldController.text.length <= 1) {
+                  // context.read()<SearchBloc>.add(SearchingVideo(textFieldController.text).)
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                        "seach field must be more than 1 single charachter 😅"),
+                  ));
+                }
 
-              child: TextField(
+                // searchBloc.add(SearchingVideoEvent());
+                // BlocProvider.of<SearchBloc>(context)
+                //   ..listVideos = []
+                //   ..add(SearchingVideoEvent());
 
-                controller: textFieldController,
-                decoration: InputDecoration(
-                    prefixIcon:IconButton(icon:Icon(Icons.search),
-                    onPressed: (){
-
-                      if(textFieldController.text.isEmpty){
-                       // context.read()<SearchBloc>.add(SearchingVideo(textFieldController.text).)
-                        Scaffold.of(context).showSnackBar(SnackBar(
-                          content: Text("please fill the search bar 😇"),
-                        ));
-                      }
-
-                      else if(textFieldController.text.length <=1){
-                        // context.read()<SearchBloc>.add(SearchingVideo(textFieldController.text).)
-                        Scaffold.of(context).showSnackBar(SnackBar(
-                          content: Text("seach field must be more than 1 single charachter 😅"),
-                        ));
-                      }
-                      BlocProvider.of<SearchBloc>(context)
-                        ..listVideos = []
-                        ..add(SearchingVideo());
-
-                      BlocProvider.of<SearchBloc>(context)
-                        ..search = textFieldController.text
-                        ..add(SearchingVideo());
-
-                    },),
-                    suffixIcon: IconButton(
-                      icon: const Icon(Icons.clear),
-                      onPressed: () {
-                       // textFieldController.text="";
-                      },
-                    ),
-                    hintText: 'Search...',
-                    border: InputBorder.none),
-              ),
+                BlocProvider.of<SearchBloc>(context)
+                  ..search = textFieldController.text
+                  ..listVideos = []
+                  ..add(SearchingVideoEvent());
+              },
             ),
-
+            suffixIcon: IconButton(
+              icon: const Icon(Icons.clear),
+              onPressed: () {
+                // textFieldController.text="";
+              },
+            ),
+            hintText: 'Search...',
+            border: InputBorder.none),
+      ),
     );
   }
 }
