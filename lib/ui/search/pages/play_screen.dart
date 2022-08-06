@@ -8,10 +8,6 @@ import '../widgets/play_screen_display.dart';
 class PlayScreenPage extends StatelessWidget {
   const PlayScreenPage({Key? key,required this.uid}) : super(key: key);
   final String uid;
-  // final String title;
-  // final String author;
-  // final double videoViews;
-  // final String description;
 
   @override
   Widget build(BuildContext context) {

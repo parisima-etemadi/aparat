@@ -67,7 +67,7 @@ class VideoDetails extends StatelessWidget {
         children: [
          
           Text(title),
-          Text('توضیحات ویدئو'),
+
 
           Container(
             padding: const EdgeInsets.all(20),
