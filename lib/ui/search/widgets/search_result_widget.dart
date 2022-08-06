@@ -23,7 +23,7 @@ class _SearchResultWidgetState extends State<SearchResultWidget> {
   }
 
   ScrollController _scrollController = ScrollController();
-  bool _showCircularProgressIndicator = false;
+  bool _showCircularProgressIndicator = true;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,16 @@ class _SearchResultWidgetState extends State<SearchResultWidget> {
                       print("reach the end of the page");
                     }
                   }),
-                child: Column(
+                child: BlocListener<SearchBloc, SearchState>(
+  listener: (context, state) {
+
+
+   if(state is GetDetailsSucceed){
+     print("GetDetailsSucceed");
+   }
+    // TODO: implement listener
+  },
+  child: Column(
                   children: [
                     GridView.builder(
                         physics: NeverScrollableScrollPhysics(),
@@ -62,12 +71,12 @@ class _SearchResultWidgetState extends State<SearchResultWidget> {
                         itemBuilder: (BuildContext context, int index) {
                           return VideoItemSearchResult(
                             onTap: () {
+
+
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => PlayScreenPage(
-
-                                      )));
+                                      builder: (context) => PlayScreenPage(uid:state.videos[index].uid)));
                             },
                             index: index,
                             videoList: state.videos,
@@ -79,6 +88,7 @@ class _SearchResultWidgetState extends State<SearchResultWidget> {
                       ),
                   ],
                 ),
+),
               ),
             );
           }
@@ -95,15 +105,15 @@ class _SearchResultWidgetState extends State<SearchResultWidget> {
   void _getMoreInfo() async {
     //show progressbar
 
-    setState(() {
-      _showCircularProgressIndicator = true;
-    });
+    // setState(() {
+    //   _showCircularProgressIndicator = true;
+    // });
     print("_getMoreInfo called");
     BlocProvider.of<SearchBloc>(context)..add(SearchingVideoEvent());
-    if (BlocProvider.of<SearchBloc>(context).isfetch) {
-      setState(() {
-        _showCircularProgressIndicator = false;
-      });
-    }
+   // if (BlocProvider.of<SearchBloc>(context).isfetch) {
+    //  setState(() {
+     //   _showCircularProgressIndicator = false;
+    //  });
+  //  }
   }
 }

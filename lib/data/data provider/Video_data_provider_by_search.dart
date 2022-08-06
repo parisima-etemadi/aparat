@@ -1,8 +1,9 @@
 import 'dart:convert';
 
+import 'package:aparat/data/entities/vide_detail/video_detail_entity.dart';
 import 'package:dio/dio.dart';
 
-import '../entities/video_entity.dart';
+import '../entities/video_search/video_entity.dart';
 
 class VideoDataProvider {
   Future<List<VideoEntity>> getVideosBySearch(
@@ -17,5 +18,18 @@ class VideoDataProvider {
         .toList();
 
     return responsevideo;
+  }
+
+  Future<VideoDetailEntity> getVideosDetails(String uid) async {
+    var rawVideoDetailResponce = await Dio().get(
+      'https://www.aparat.com/etc/api/video/videohash/$uid',
+    );
+    print("parisima " + rawVideoDetailResponce.data.toString());
+    var videoDetailEntity = json.decode(rawVideoDetailResponce.data)['video'];
+    print("parisima11"+uid.toString());
+    print("parisima1" + videoDetailEntity.toString());
+    final videoDetailsEntity = VideoDetailEntity.fromJson(videoDetailEntity);
+    print("parisima 2" + videoDetailsEntity.toString());
+    return videoDetailsEntity;
   }
 }
