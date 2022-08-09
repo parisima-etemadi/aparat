@@ -18,13 +18,11 @@ class _PlayScreenDisplayState extends State<PlayScreenDisplay> {
   @override
   void initState() {
     // TODO: implement initState
-
+    BlocProvider.of<DetailsOfVideoBloc>(context)
+        .add(GetVideoDetails(widget.uid));
     super.initState();
 
-    BlocProvider.of<DetailsOfVideoBloc>(context)
-      ..add(GetVideoDetails(widget.uid));
-
-    print("init state videoplayer called " + widget.uid);
+    // print("init state videoplayer called " + widget.uid);
     _controller = VideoPlayerController.asset(asset)
       ..addListener(() => setState(() {}))
       ..initialize();
@@ -32,11 +30,8 @@ class _PlayScreenDisplayState extends State<PlayScreenDisplay> {
 
   @override
   Widget build(BuildContext context) {
-    print("build call");
     return BlocBuilder<DetailsOfVideoBloc, DetailsOfVideoState>(
       builder: (context, state) {
-        ("state is play" + state.toString());
-
         if (state is DetailsOfVideoLoadedsuccessfully)
           return VideoDetails(
             controller: _controller,

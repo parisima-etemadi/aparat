@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:aparat/data/data%20provider/Video_data_provider_by_search.dart';
+import 'package:aparat/data/data%20provider/Video_data_provider.dart';
 import 'package:aparat/data/repositories/video_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,9 +11,6 @@ import '../pages/play_page.dart';
 import 'search_bar.dart';
 import 'video_item_search_result.dart';
 import 'package:aparat/injection_container.dart';
-
-VideoDataProvider videoDataProvider = new VideoDataProvider();
-VideoRepository videoRepository = new VideoRepository(videoDataProvider);
 
 class SearchResultWidget extends StatefulWidget {
   const SearchResultWidget({Key? key}) : super(key: key);
@@ -41,17 +38,19 @@ class _SearchResultWidgetState extends State<SearchResultWidget> {
       children: [
         SearchBar(),
         BlocBuilder<SearchBloc, SearchState>(builder: (context, state) {
+          if (state is SearchLoading) {}
           if (state is SearchLoaded) {
-            // _showCircularProgressIndicator = false;
+            _showCircularProgressIndicator = false;
             return Expanded(
               child: SingleChildScrollView(
                 controller: _scrollController
                   ..addListener(() {
-                    if (_scrollController.position.pixels >=
+                    if (_scrollController.position.pixels ==
                         _scrollController.position.maxScrollExtent) {
-                      Timer(Duration(seconds: 3), () {
-                        _getMoreInfo();
-                      });
+                      _showCircularProgressIndicator = true;
+                      //  Timer(Duration(seconds: 3), () {
+                      _getMoreInfo();
+                      //  });
                     }
                   }),
                 child: Column(
@@ -72,9 +71,7 @@ class _SearchResultWidgetState extends State<SearchResultWidget> {
                                   MaterialPageRoute(
                                       builder: (context) => BlocProvider(
                                             create: (context) =>
-                                                DetailsOfVideoBloc(
-                                                    videoRepository:
-                                                        videoRepository),
+                                                dI<DetailsOfVideoBloc>(),
                                             child: PlayScreenPage(
                                                 uid: state.videos[index].uid),
                                           )));
@@ -106,10 +103,14 @@ class _SearchResultWidgetState extends State<SearchResultWidget> {
     //show progressbar
 
     // setState(() {
-    //   _showCircularProgressIndicator = true;
-    // });
 
-    BlocProvider.of<SearchBloc>(context)..add(SearchingVideoEvent());
+    // });
+    // print('_showCircularProgressIndicator = ' +
+    //    _showCircularProgressIndicator.toString());
+    Timer(Duration(seconds: 3), () {
+      BlocProvider.of<SearchBloc>(context).add(SearchingVideoEvent());
+    });
+
     // if (BlocProvider.of<SearchBloc>(context).isfetch) {
     //  setState(() {
     //   _showCircularProgressIndicator = false;

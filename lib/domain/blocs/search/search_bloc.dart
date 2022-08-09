@@ -19,7 +19,8 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   SearchBloc(this.videoRepository) : super(SearchInitial()) {
     on<SearchEvent>((event, emit) async {
       if (event is SearchingVideoEvent) {
-        print("SearchingVideoEvent");
+        emit(SearchLoading());
+        print("SearchingVideoEvent called");
         isfetch = true;
         List<VideoModel> listVideo =
             await videoRepository.getVideoBySearch(search, videoPerPage);

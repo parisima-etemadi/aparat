@@ -16,7 +16,6 @@ class DetailsOfVideoBloc
   DetailsOfVideoBloc({required this.videoRepository})
       : super(DetailsOfVideoInitial()) {
     on<DetailsOfVideoEvent>((event, emit) async {
-      print("state in vide bloc" + state.toString());
       if (event is GetVideoDetails) {
         final videoDetails =
             await videoRepository.getVideoDetailsBySearch(event.uid);
