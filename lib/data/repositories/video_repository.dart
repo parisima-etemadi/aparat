@@ -18,10 +18,15 @@ class VideoRepository {
   }
 
   Future<VideoDetailModel> getVideoDetailsBySearch(String uid) async {
-    print(21);
     final videoDetails = await videoDataProvider.getVideosDetails(uid);
-    print(23);
     return videoDetails.mapTo();
+  }
+
+  Future<List<VideoModel>> getSimilarVideos(
+      int categoryID, ) async {
+    final listVideos =
+    await videoDataProvider.getSimilarVideos(categoryID);
+    return listVideos.map((e) => e.mapTo()).toList();
   }
 }
 

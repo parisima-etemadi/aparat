@@ -24,12 +24,19 @@ class VideoDataProvider {
     var rawVideoDetailResponce = await Dio().get(
       'https://www.aparat.com/etc/api/video/videohash/$uid',
     );
-    print("parisima " + rawVideoDetailResponce.data.toString());
     var videoDetailEntity = json.decode(rawVideoDetailResponce.data)['video'];
-    print("parisima11"+uid.toString());
-    print("parisima1" + videoDetailEntity.toString());
     final videoDetailsEntity = VideoDetailEntity.fromJson(videoDetailEntity);
-    print("parisima 2" + videoDetailsEntity.toString());
     return videoDetailsEntity;
+  }
+  Future<List<VideoEntity>> getSimilarVideos(int categoryId) async {
+    var rawSimilarVideosResponce = await Dio().get(
+      'https://www.aparat.com/etc/api/categoryVideos/cat/$categoryId/perpage/10',
+    );
+    List<dynamic> list = json.decode(rawSimilarVideosResponce.data)['categoryvideos'];
+    final responsevideo = list
+        .map<VideoEntity>(
+            (JsonMapObject) => VideoEntity.fromJson(JsonMapObject))
+        .toList();
+    return responsevideo;
   }
 }

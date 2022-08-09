@@ -58,6 +58,13 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
         emit(GetDetailsSucceed(videoDetails));
       }
+
+      if (event is GetSimilarVideos) {
+
+     //   final videoDetails = await videoRepository.getSimilarVideos(event.uid);
+
+      //  emit(GetDetailsSucceed(videoDetails));
+      }
       // key=> searchbloc
       // set keyborad
     });

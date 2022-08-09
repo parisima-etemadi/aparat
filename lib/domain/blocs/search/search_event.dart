@@ -11,4 +11,8 @@ class GetVideoDetails extends SearchEvent {
   GetVideoDetails(this.uid);
 }
 
+class GetSimilarVideos extends SearchEvent {
+  int catergoryId;
 
+  GetSimilarVideos(this.catergoryId);
+}

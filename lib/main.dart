@@ -7,8 +7,8 @@ import 'ui/search/pages/search_result_page.dart';
 
 void main() {
   runApp(const MyApp());
-  // VideoDataProvider videoDataProvider = VideoDataProvider();
-  // videoDataProvider.getVideosDetails("SVhTH");
+   VideoDataProvider videoDataProvider = VideoDataProvider();
+   videoDataProvider.getSimilarVideos(2);
 }
 
 class MyApp extends StatelessWidget {
