@@ -2,42 +2,42 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../../domain/blocs/play_video/details_of_video_bloc.dart';
 import '../../../domain/blocs/search/search_bloc.dart';
 
 class PlayScreenDisplay extends StatefulWidget {
-  const PlayScreenDisplay({
-    Key? key,
-    required this.uid
-  }) : super(key: key);
-final String uid;
+  const PlayScreenDisplay({Key? key, required this.uid}) : super(key: key);
+  final String uid;
   @override
   State<PlayScreenDisplay> createState() => _PlayScreenDisplayState();
 }
 
 class _PlayScreenDisplayState extends State<PlayScreenDisplay> {
-  final asset='assets/bee.mp4';
- late VideoPlayerController _controller;
+  final asset = 'assets/bee.mp4';
+  late VideoPlayerController _controller;
   @override
   void initState() {
     // TODO: implement initState
 
     super.initState();
-    BlocProvider.of<SearchBloc>(context)..add(GetVideoDetails(widget.uid));
 
-    _controller=VideoPlayerController.asset(asset)..addListener(()=> setState(() {
+    BlocProvider.of<DetailsOfVideoBloc>(context)
+      ..add(GetVideoDetails(widget.uid));
 
-    }))..initialize();
-    
+    print("init state videoplayer called " + widget.uid);
+    _controller = VideoPlayerController.asset(asset)
+      ..addListener(() => setState(() {}))
+      ..initialize();
   }
 
   @override
   Widget build(BuildContext context) {
-
-    return BlocBuilder<SearchBloc, SearchState>(
+    print("build call");
+    return BlocBuilder<DetailsOfVideoBloc, DetailsOfVideoState>(
       builder: (context, state) {
-        print("state is play"+state.toString());
+        ("state is play" + state.toString());
 
-        if (state is GetDetailsSucceed)
+        if (state is DetailsOfVideoLoadedsuccessfully)
           return VideoDetails(
             controller: _controller,
             title: state.videoDetailModel.title,
@@ -45,17 +45,26 @@ class _PlayScreenDisplayState extends State<PlayScreenDisplay> {
             visit_cnt: state.videoDetailModel.visit_cnt,
             description: state.videoDetailModel.description,
           );
-        else
-          return Text("nothing");
+        else if (state is DetailsOfVideoInitial) {
+          return Center(child: CircularProgressIndicator());
+        }
+        return Center(child: Text("nothing"));
       },
     );
   }
 }
 
 class VideoDetails extends StatelessWidget {
-  const VideoDetails({Key? key, required this.username, required this.title,required this.visit_cnt,required this.description,required this.controller}) : super(key: key);
+  const VideoDetails(
+      {Key? key,
+      required this.username,
+      required this.title,
+      required this.visit_cnt,
+      required this.description,
+      required this.controller})
+      : super(key: key);
 
-   final String title;
+  final String title;
   final String? username;
   final int visit_cnt;
   final String? description;
@@ -65,10 +74,7 @@ class VideoDetails extends StatelessWidget {
     return SafeArea(
       child: Column(
         children: [
-         
           Text(title),
-
-
           Container(
             padding: const EdgeInsets.all(20),
             child: AspectRatio(
@@ -83,19 +89,17 @@ class VideoDetails extends StatelessWidget {
               ),
             ),
           ),
-
-
           Stack(
             alignment: Alignment.centerRight,
             children: [
               Container(
-               // padding: EdgeInsets.only(right: 10),
-              //  width: MediaQuery.of(context).size.width,
-              //  height: MediaQuery.of(context).size.height/4,
+                // padding: EdgeInsets.only(right: 10),
+                //  width: MediaQuery.of(context).size.width,
+                //  height: MediaQuery.of(context).size.height/4,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                   color: Color(0xfff5f5f5),
-                //  color: Colors.red
+                  //  color: Colors.red
                 ),
               ),
               Padding(
@@ -103,33 +107,37 @@ class VideoDetails extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    InfoVideo(infoName: username,value: 'نام کاربری',),
+                    InfoVideo(
+                      infoName: username,
+                      value: 'نام کاربری',
+                    ),
                     SizedBox(
                       height: 5,
                     ),
-                    InfoVideo(infoName: visit_cnt.toString(),value: 'تعداد بازدید',),
+                    InfoVideo(
+                      infoName: visit_cnt.toString(),
+                      value: 'تعداد بازدید',
+                    ),
                     SizedBox(
                       height: 5,
                     ),
-             Row(children: [Expanded(
-                 child: Text(
-                   description  ?? "",
-                   textAlign: TextAlign.right,
-                   style: TextStyle(
-                     color: Colors.black,
-                     fontSize: 18,
-                   ),
-                 ),
-             ),],)
-
-
-
-
-
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            description ?? "",
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
                   ],
                 ),
               ),
-
             ],
           ),
           Text(
@@ -144,9 +152,11 @@ class VideoDetails extends StatelessWidget {
     );
   }
 
-  Widget buildVideoPlayer() {
-    return AspectRatio(aspectRatio:controller.value.aspectRatio ,child: VideoPlayer(controller));
-  }
+  // Widget buildVideoPlayer() {
+  //   return AspectRatio(
+  //       aspectRatio: controller.value.aspectRatio,
+  //       child: VideoPlayer(controller));
+  // }
 }
 
 class InfoVideo extends StatelessWidget {
@@ -165,14 +175,14 @@ class InfoVideo extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-      Text(
-          '$infoName :' ,
-        //textAlign: TextAlign.right,
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 18,
-        ),
-      ),
+          Text(
+            '$infoName :',
+            //textAlign: TextAlign.right,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 18,
+            ),
+          ),
           Text(
             value ?? "",
             textAlign: TextAlign.justify,
@@ -180,7 +190,9 @@ class InfoVideo extends StatelessWidget {
               color: Colors.black,
               fontSize: 18,
             ),
-          ),],),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -223,16 +235,16 @@ class _ControlsOverlay extends StatelessWidget {
           child: controller.value.isPlaying
               ? const SizedBox.shrink()
               : Container(
-            color: Colors.black26,
-            child: const Center(
-              child: Icon(
-                Icons.play_arrow,
-                color: Colors.white,
-                size: 100.0,
-                semanticLabel: 'Play',
-              ),
-            ),
-          ),
+                  color: Colors.black26,
+                  child: const Center(
+                    child: Icon(
+                      Icons.play_arrow,
+                      color: Colors.white,
+                      size: 100.0,
+                      semanticLabel: 'Play',
+                    ),
+                  ),
+                ),
         ),
         GestureDetector(
           onTap: () {

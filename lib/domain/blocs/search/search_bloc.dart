@@ -16,31 +16,11 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   String uid = "";
   bool isfetch = false;
 
-  // @override
-  // Stream<SearchState> mapEventToState(SearchEvent event) async* {
-  //   if (event is SearchingVideoEvent) {
-  //     try {
-  //       List<VideoModel> listGetData =
-  //           await videoRepository.getVideoBySearch(search, videoPerPage);
-  //       listVideos.addAll(listGetData);
-  //       yield SearchLoaded(listVideos);
-  //       videoPerPage += 1;
-  //     } on Exception {}
-  //   }
-  //   if (event is GetVideoDetails) {
-  //     final videoDetails = await videoRepository.getVideoDetailsBySearch(uid);
-  //     print("event is" + event.toString());
-  //     yield GetDetailsSucceed();
-  //   }
   SearchBloc(this.videoRepository) : super(SearchInitial()) {
     on<SearchEvent>((event, emit) async {
       if (event is SearchingVideoEvent) {
+        print("SearchingVideoEvent");
         isfetch = true;
-        // if (search?.length <= 1) {
-        //   emit(SearchError());
-        // }
-
-        // emit(SearchLoading());
         List<VideoModel> listVideo =
             await videoRepository.getVideoBySearch(search, videoPerPage);
         listVideos.addAll(listVideo);
@@ -48,27 +28,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
         videoPerPage += 1;
         isfetch = false;
-
-//  }
-
       }
-      if (event is GetVideoDetails) {
-
-        final videoDetails = await videoRepository.getVideoDetailsBySearch(event.uid);
-
-        emit(GetDetailsSucceed(videoDetails));
-      }
-
-      if (event is GetSimilarVideos) {
-
-     //   final videoDetails = await videoRepository.getSimilarVideos(event.uid);
-
-      //  emit(GetDetailsSucceed(videoDetails));
-      }
-      // key=> searchbloc
-      // set keyborad
     });
-
-    // two function for searching delete list
   }
 }

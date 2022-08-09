@@ -3,12 +3,15 @@ import 'dart:convert';
 import 'package:aparat/data/entities/vide_detail/video_detail_entity.dart';
 import 'package:dio/dio.dart';
 
+import '../../injection_container.dart';
 import '../entities/video_search/video_entity.dart';
-
+var dio=dI<Dio>();
 class VideoDataProvider {
+
   Future<List<VideoEntity>> getVideosBySearch(
       String search, int videosperpage) async {
-    var rawVideoResponce = await Dio().get(
+
+    var rawVideoResponce = await dio.get(
       'https://www.aparat.com/etc/api/videoBySearch/text/$search/perpage/10/curoffset/$videosperpage',
     );
     List<dynamic> list = json.decode(rawVideoResponce.data)['videobysearch'];

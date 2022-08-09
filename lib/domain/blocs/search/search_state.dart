@@ -17,10 +17,5 @@ class SearchLoaded extends SearchState {
 
 class SearchLoading extends SearchState {}
 
-class GetDetailsSucceed extends SearchState {
-  VideoDetailModel videoDetailModel;
 
-  GetDetailsSucceed(this.videoDetailModel);
-
-}
 

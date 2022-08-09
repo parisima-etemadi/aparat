@@ -5,11 +5,7 @@ abstract class SearchEvent {}
 
 class SearchingVideoEvent extends SearchEvent {}
 
-class GetVideoDetails extends SearchEvent {
-  String uid;
 
-  GetVideoDetails(this.uid);
-}
 
 class GetSimilarVideos extends SearchEvent {
   int catergoryId;

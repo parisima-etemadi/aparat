@@ -1,12 +1,19 @@
 import 'dart:async';
 
+import 'package:aparat/data/data%20provider/Video_data_provider_by_search.dart';
+import 'package:aparat/data/repositories/video_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../domain/blocs/play_video/details_of_video_bloc.dart';
 import '../../../domain/blocs/search/search_bloc.dart';
-import '../pages/play_screen.dart';
+import '../pages/play_page.dart';
 import 'search_bar.dart';
 import 'video_item_search_result.dart';
+import 'package:aparat/injection_container.dart';
+
+VideoDataProvider videoDataProvider = new VideoDataProvider();
+VideoRepository videoRepository = new VideoRepository(videoDataProvider);
 
 class SearchResultWidget extends StatefulWidget {
   const SearchResultWidget({Key? key}) : super(key: key);
@@ -45,20 +52,9 @@ class _SearchResultWidgetState extends State<SearchResultWidget> {
                       Timer(Duration(seconds: 3), () {
                         _getMoreInfo();
                       });
-
-                      print("reach the end of the page");
                     }
                   }),
-                child: BlocListener<SearchBloc, SearchState>(
-  listener: (context, state) {
-
-
-   if(state is GetDetailsSucceed){
-     print("GetDetailsSucceed");
-   }
-    // TODO: implement listener
-  },
-  child: Column(
+                child: Column(
                   children: [
                     GridView.builder(
                         physics: NeverScrollableScrollPhysics(),
@@ -71,12 +67,17 @@ class _SearchResultWidgetState extends State<SearchResultWidget> {
                         itemBuilder: (BuildContext context, int index) {
                           return VideoItemSearchResult(
                             onTap: () {
-
-
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => PlayScreenPage(uid:state.videos[index].uid)));
+                                      builder: (context) => BlocProvider(
+                                            create: (context) =>
+                                                DetailsOfVideoBloc(
+                                                    videoRepository:
+                                                        videoRepository),
+                                            child: PlayScreenPage(
+                                                uid: state.videos[index].uid),
+                                          )));
                             },
                             index: index,
                             videoList: state.videos,
@@ -88,7 +89,6 @@ class _SearchResultWidgetState extends State<SearchResultWidget> {
                       ),
                   ],
                 ),
-),
               ),
             );
           }
@@ -108,12 +108,12 @@ class _SearchResultWidgetState extends State<SearchResultWidget> {
     // setState(() {
     //   _showCircularProgressIndicator = true;
     // });
-    print("_getMoreInfo called");
+
     BlocProvider.of<SearchBloc>(context)..add(SearchingVideoEvent());
-   // if (BlocProvider.of<SearchBloc>(context).isfetch) {
+    // if (BlocProvider.of<SearchBloc>(context).isfetch) {
     //  setState(() {
-     //   _showCircularProgressIndicator = false;
+    //   _showCircularProgressIndicator = false;
     //  });
-  //  }
+    //  }
   }
 }
