@@ -11,7 +11,7 @@ part 'search_state.dart';
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final VideoRepository videoRepository;
   List<VideoModel> listVideos = [];
-  String search = "";
+  String search = "hi";
   int videoPerPage = 1;
   String uid = "";
   bool isfetch = false;
@@ -27,8 +27,8 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         listVideos.addAll(listVideo);
         emit(SearchLoaded(listVideos));
 
-        videoPerPage += 1;
-        isfetch = false;
+        // videoPerPage += 1;
+        // isfetch = false;
       }
     });
   }
