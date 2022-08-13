@@ -1,5 +1,4 @@
 import 'package:aparat/domain/blocs/search/search_bloc.dart';
-import 'package:aparat/ui/search/pages/search_result_page.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 

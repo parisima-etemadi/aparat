@@ -10,27 +10,32 @@ class AparatPaginationCubit extends Cubit<AparatPaginationState> {
   AparatPaginationCubit({required this.videoRepository})
       : super(AparatPaginationInitial());
   final VideoRepository videoRepository;
-  List<VideoModel> listVideos = [];
+  List<VideoModel> oldListVideos = [];
   bool fetch = true;
   int perpage = 1;
+  int number = 2;
   void loadVideos(List<VideoModel> listVideo) async {
     emit(AparatPaginationLoading());
-    listVideos = listVideo;
+    oldListVideos = listVideo;
 
     emit(AparatPaginationLoaded(listVideo, true));
   }
 
   void loadMoreVideos(List<VideoModel> listVideo, String searchKey) async {
+    print("loadMoreVideos cubit called");
     perpage = perpage + 1;
     developer.log(perpage.toString(), name: 'perPage');
     fetch = true;
 
-    List<VideoModel> listVideo =
-        await videoRepository.getVideoBySearch(searchKey, perpage);
+    //if (perpage <= number) {
+    final listVideo = await videoRepository
+        .getVideoBySearch(searchKey, perpage);
+        oldListVideos.addAll(listVideo);
+    developer.log(oldListVideos.length.toString(), name: 'lisvideo 32');
+    emit(AparatPaginationLoaded(oldListVideos, true));
+   // }
 
-    listVideos.addAll(listVideo);
-    print("listVideos" + listVideos.length.toString());
-    emit(AparatPaginationLoaded(listVideos, true));
     fetch = false;
+     number++;
   }
 }
