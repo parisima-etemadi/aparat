@@ -10,6 +10,7 @@ class PlayScreenDisplay extends StatefulWidget {
   const PlayScreenDisplay({Key? key, required this.uid}) : super(key: key);
   final String uid;
   @override
+
   State<PlayScreenDisplay> createState() => _PlayScreenDisplayState();
 }
 
