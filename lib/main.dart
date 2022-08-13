@@ -4,7 +4,6 @@ import 'package:aparat/ui/pages/search_result_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'data/data provider/Video_data_provider.dart';
 import 'injection_container.dart' as di;
 
 void main() {

@@ -1,4 +1,3 @@
-import 'package:aparat/domain/blocs/search/search_bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
@@ -19,7 +18,6 @@ void _inJectVideoRepository() {
   dI.registerLazySingleton<VideoDataProvider>(
       () => VideoDataProviderImp(dio: dI()));
   dI.registerLazySingleton<VideoRepository>(() => VideoRepositoryImp(dI()));
-  dI.registerLazySingleton(() => SearchBloc(dI()));
   dI.registerLazySingleton(() => AparatPaginationCubit(videoRepository: dI()));
   dI.registerFactory(() => DetailsOfVideoBloc(videoRepository: dI()));
   dI.registerLazySingleton<Dio>(() => Dio());

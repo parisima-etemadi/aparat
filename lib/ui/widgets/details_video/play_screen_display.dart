@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../../domain/blocs/play_video/details_of_video_bloc.dart';
-import '../../../../domain/blocs/search/search_bloc.dart';
 import 'info_comment_visit_video.dart';
 
 class PlayScreenDisplay extends StatefulWidget {

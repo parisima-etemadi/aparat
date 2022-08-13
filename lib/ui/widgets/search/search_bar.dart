@@ -1,5 +1,4 @@
 import 'package:aparat/domain/blocs/pagination/cubit/aparat_pagination_cubit.dart';
-import 'package:aparat/domain/blocs/search/search_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

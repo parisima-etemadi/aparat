@@ -21,25 +21,13 @@ class _AparatPaginationWidgetState extends State<AparatPaginationWidget> {
   late ScrollController _scrollController;
   int number = 0;
   late AparatPaginationCubit aparatPaginationCubit;
-  scrollListener() {
-    _scrollController.addListener(() {
-      if (_scrollController.offset ==
-          _scrollController.position.maxScrollExtent) {
-        number++;
-        print('//////////////// $number');
-        context
-            .read<AparatPaginationCubit>()
-            .loadMoreVideos();
-      }
-    });
-  }
+
 
   @override
   void initState() {
     // TODO: implement initState
     _scrollController = ScrollController();
     aparatPaginationCubit=dI<AparatPaginationCubit>();
-    scrollListener();
     super.initState();
   }
 
@@ -94,7 +82,7 @@ class _AparatPaginationWidgetState extends State<AparatPaginationWidget> {
         if (State is AparatPaginationFailed)
           return Center(child: Text("failure "),);
         return Center(
-            child: Text("state chenged in aparat pagination + $state"));
+            child: Text(""));
       },
 
 
