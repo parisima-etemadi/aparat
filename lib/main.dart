@@ -1,12 +1,17 @@
 import 'package:aparat/data/repositories/video_repository.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'data/data provider/Video_data_provider.dart';
 import 'ui/search/pages/search_result_page.dart';
 import 'injection_container.dart' as di;
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
   di.init();
   runApp(const MyApp());
 }
