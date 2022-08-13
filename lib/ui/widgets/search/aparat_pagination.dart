@@ -96,6 +96,8 @@ class _AparatPaginationWidgetState extends State<AparatPaginationWidget> {
         return Center(
             child: Text("state chenged in aparat pagination + $state"));
       },
+
+
     );
   }
 
