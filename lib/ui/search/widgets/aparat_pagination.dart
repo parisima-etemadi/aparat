@@ -8,6 +8,7 @@ import 'package:aparat/injection_container.dart';
 import '../../../domain/blocs/pagination/cubit/aparat_pagination_cubit.dart';
 import '../../../domain/blocs/search/search_bloc.dart';
 import '../../../domain/models/search/video_model.dart';
+import 'package:aparat/ui/search/pages/play_page.dart';
 
 class AparatPaginationWidget extends StatefulWidget {
   const AparatPaginationWidget({Key? key, required this.videoLists})
@@ -55,27 +56,18 @@ class _AparatPaginationWidgetState extends State<AparatPaginationWidget> {
                         itemBuilder: (BuildContext context, int index) {
                           return VideoItemSearchResult(
                             onTap: () {
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => BlocProvider(
-                              //               create: (context) =>
-                              //                   dI<DetailsOfVideoBloc>(),
-                              //               child: PlayScreenPage(
-                              //                   uid: state.videos[index].uid),
-                              //             )));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => PlayScreenPage(
+                                        uid: state.videos[index].uid),
+                                  ));
                             },
                             index: index,
                             videoList: state.videos,
                           );
                         }),
-
-                    if (context.read<AparatPaginationCubit>().fetch == true)
-                      CircularProgressIndicator()
-                    // if (_showCircularProgressIndicator)
-                    //   Center(
-                    //     child: CircularProgressIndicator(),
-                    //   ),
+                    if (state.fetch == true) CircularProgressIndicator()
                   ],
                 ),
               ),

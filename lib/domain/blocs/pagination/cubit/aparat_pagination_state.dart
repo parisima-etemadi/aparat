@@ -9,12 +9,16 @@ class AparatPaginationLoading extends AparatPaginationState {}
 
 class AparatPaginationLoaded extends AparatPaginationState {
   final List<VideoModel> videos;
-  AparatPaginationLoaded(this.videos);
+  final bool fetch;
+  AparatPaginationLoaded(this.videos, this.fetch);
 }
 
 class AparatPaginationMoreDataLoaded extends AparatPaginationState {
   final List<VideoModel> videos;
-  AparatPaginationMoreDataLoaded(this.videos);
+
+  AparatPaginationMoreDataLoaded(
+    this.videos,
+  );
 }
 
 class AparatPaginationFailed extends AparatPaginationState {}

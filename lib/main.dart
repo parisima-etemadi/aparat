@@ -1,5 +1,5 @@
 import 'package:aparat/data/repositories/video_repository.dart';
-import 'package:aparat/ui/search/pages/play_page.dart';
+
 import 'package:flutter/material.dart';
 
 import 'data/data provider/Video_data_provider.dart';

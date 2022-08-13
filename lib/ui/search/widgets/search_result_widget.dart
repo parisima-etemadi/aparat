@@ -23,20 +23,8 @@ class SearchResultWidget extends StatefulWidget {
 
 class _SearchResultWidgetState extends State<SearchResultWidget> {
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    // BlocProvider.of<SearchBloc>(context).add(SearchingVideoEvent());
-  }
-
-  bool _showCircularProgressIndicator = true;
-
-  @override
   Widget build(BuildContext context) {
-//nestedscrolview
-    return
-        // color: Colors.red,
-        Column(
+    return Column(
       children: [
         SearchBar(),
         BlocBuilder<SearchBloc, SearchState>(builder: (context, state) {
@@ -45,9 +33,9 @@ class _SearchResultWidgetState extends State<SearchResultWidget> {
 
             return AparatPaginationWidget(videoLists: state.videos);
           }
-          // if (state is SearchLoading) {
-          //   return Center(child: CircularProgressIndicator());
-          // }
+          if (state is SearchLoading) {
+            return Center(child: CircularProgressIndicator());
+          }
 
           return Text("search state changeged+ $state");
         }),

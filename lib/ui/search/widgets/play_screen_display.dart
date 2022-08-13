@@ -17,12 +17,10 @@ class _PlayScreenDisplayState extends State<PlayScreenDisplay> {
   late VideoPlayerController _controller;
   @override
   void initState() {
-    // TODO: implement initState
     BlocProvider.of<DetailsOfVideoBloc>(context)
         .add(GetVideoDetails(widget.uid));
     super.initState();
 
-    // print("init state videoplayer called " + widget.uid);
     _controller = VideoPlayerController.asset(asset)
       ..addListener(() => setState(() {}))
       ..initialize();
@@ -88,9 +86,6 @@ class VideoDetails extends StatelessWidget {
             alignment: Alignment.centerRight,
             children: [
               Container(
-                // padding: EdgeInsets.only(right: 10),
-                //  width: MediaQuery.of(context).size.width,
-                //  height: MediaQuery.of(context).size.height/4,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                   color: Color(0xfff5f5f5),
@@ -146,12 +141,6 @@ class VideoDetails extends StatelessWidget {
       ),
     );
   }
-
-  // Widget buildVideoPlayer() {
-  //   return AspectRatio(
-  //       aspectRatio: controller.value.aspectRatio,
-  //       child: VideoPlayer(controller));
-  // }
 }
 
 class InfoVideo extends StatelessWidget {
@@ -166,13 +155,11 @@ class InfoVideo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      //padding: EdgeInsets.symmetric(horizontal: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Text(
             '$infoName :',
-            //textAlign: TextAlign.right,
             style: TextStyle(
               color: Colors.black,
               fontSize: 18,
@@ -265,9 +252,6 @@ class _ControlsOverlay extends StatelessWidget {
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(
-                // Using less vertical padding as the text is also longer
-                // horizontally, so it feels like it would need more spacing
-                // horizontally (matching the aspect ratio of the video).
                 vertical: 12,
                 horizontal: 16,
               ),
@@ -294,9 +278,6 @@ class _ControlsOverlay extends StatelessWidget {
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(
-                // Using less vertical padding as the text is also longer
-                // horizontally, so it feels like it would need more spacing
-                // horizontally (matching the aspect ratio of the video).
                 vertical: 12,
                 horizontal: 16,
               ),

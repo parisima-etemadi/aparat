@@ -44,11 +44,6 @@ class _SearchBarState extends State<SearchBar> {
                   ));
                 }
 
-                // searchBloc.add(SearchingVideoEvent());
-                // BlocProvider.of<SearchBloc>(context)
-                //   ..listVideos = []
-                //   ..add(SearchingVideoEvent());
-
                 BlocProvider.of<SearchBloc>(context)
                   ..search = textFieldController.text
                   ..listVideos = []
@@ -58,7 +53,7 @@ class _SearchBarState extends State<SearchBar> {
             suffixIcon: IconButton(
               icon: const Icon(Icons.clear),
               onPressed: () {
-                // textFieldController.text="";
+                textFieldController.text = "";
               },
             ),
             hintText: 'Search...',

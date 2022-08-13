@@ -20,7 +20,10 @@ class PlayScreenPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: PlayScreenDisplay(uid: uid),
+      body: BlocProvider(
+        create: (context) => dI<DetailsOfVideoBloc>(),
+        child: PlayScreenDisplay(uid: uid),
+      ),
     );
   }
 }
