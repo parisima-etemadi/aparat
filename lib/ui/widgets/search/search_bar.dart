@@ -1,3 +1,4 @@
+import 'package:aparat/domain/blocs/pagination/cubit/aparat_pagination_cubit.dart';
 import 'package:aparat/domain/blocs/search/search_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +16,7 @@ class _SearchBarState extends State<SearchBar> {
   final textFieldController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final searchBloc = BlocProvider.of<SearchBloc>(context);
+
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
       width: double.infinity,
@@ -41,13 +42,11 @@ class _SearchBarState extends State<SearchBar> {
                   ));
                 }
 
-                BlocProvider.of<SearchBloc>(context)
-                  ..search = textFieldController.text
-                  ..listVideos = []
-                  // ..videoPerPage = 0
-                  ..add(SearchingVideoEvent());
-
-                //  BlocProvider.of<AparatPaginationCubit>(context).perpage = 0;
+                  BlocProvider.of<AparatPaginationCubit>(context)
+                    ..oldListVideos=[]
+                    ..searchKey=textFieldController.text
+                    ..perpage=1
+                ..loadMoreVideos();
               },
             ),
             suffixIcon: IconButton(

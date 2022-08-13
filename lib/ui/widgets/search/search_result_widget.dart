@@ -24,18 +24,7 @@ class _SearchResultWidgetState extends State<SearchResultWidget> {
     return Column(
       children: [
         SearchBar(),
-        BlocBuilder<SearchBloc, SearchState>(builder: (context, state) {
-          if (state is SearchLoaded) {
-            context.read<AparatPaginationCubit>().loadVideos(state.videos);
-
-            return AparatPaginationWidget(videoLists: state.videos);
-          }
-          if (state is SearchLoading) {
-            return Center(child: CircularProgressIndicator());
-          }
-
-          return Text("search state changeged+ $state");
-        }),
+      AparatPaginationWidget( ),
       ],
     );
   }

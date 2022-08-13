@@ -22,3 +22,5 @@ class AparatPaginationMoreDataLoaded extends AparatPaginationState {
 }
 
 class AparatPaginationFailed extends AparatPaginationState {}
+
+class AparatPaginationNotFound extends AparatPaginationState{}

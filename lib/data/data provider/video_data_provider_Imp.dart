@@ -16,7 +16,10 @@ class VideoDataProviderImp implements VideoDataProvider {
     var rawVideoResponce = await dio.get(
       'https://www.aparat.com/etc/api/videoBySearch/text/$search/perpage/10/curoffset/$videosperpage',
     );
-    List<dynamic> list = json.decode(rawVideoResponce.data)['videobysearch'];
+    List<dynamic>? list = json.decode(rawVideoResponce.data)['videobysearch'] ;
+    if(list ==null){
+      list=[];
+    }
     final responsevideo = list
         .map<VideoEntity>(
             (JsonMapObject) => VideoEntity.fromJson(JsonMapObject))
