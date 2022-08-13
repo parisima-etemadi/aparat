@@ -19,14 +19,20 @@ class AparatPaginationWidget extends StatefulWidget {
 }
 
 class _AparatPaginationWidgetState extends State<AparatPaginationWidget> {
-  ScrollController _scrollController = ScrollController();
+  late ScrollController _scrollController;
+  @override
+  void initState() {
+    // TODO: implement initState
+    _scrollController = ScrollController();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     String searchKey = BlocProvider.of<SearchBloc>(context).search;
     return BlocBuilder<AparatPaginationCubit, AparatPaginationState>(
       builder: (context, state) {
-        developer.log(state.toString(), name: 'state Aparat');
+        // developer.log(state.toString(), name: 'state Aparat');
 
         if (state is AparatPaginationInitial) return Center(child: Text(""));
 
@@ -36,11 +42,18 @@ class _AparatPaginationWidgetState extends State<AparatPaginationWidget> {
               child: SingleChildScrollView(
                 controller: _scrollController
                   ..addListener(() {
-                    if (_scrollController.position.pixels ==
-                        _scrollController.position.maxScrollExtent) {
-                      context
-                          .read<AparatPaginationCubit>()
-                          .loadMoreVideos(state.videos, searchKey);
+                    if (_scrollController.position.atEdge) {
+                      if (_scrollController.position.pixels != 0) {
+                        context
+                            .read<AparatPaginationCubit>()
+                            .loadMoreVideos(state.videos, searchKey);
+                      }
+                      // Future.delayed(
+                      //    const Duration(seconds: 4),
+                      //() =>
+
+                      //   );
+                      print("addListener _scrollController");
                     }
                   }),
                 child: Column(

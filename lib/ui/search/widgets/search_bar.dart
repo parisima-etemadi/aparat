@@ -2,6 +2,7 @@ import 'package:aparat/domain/blocs/search/search_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../domain/blocs/pagination/cubit/aparat_pagination_cubit.dart';
 import '../../../domain/blocs/search/search_bloc.dart';
 import '../../../domain/blocs/search/search_bloc.dart';
 
@@ -48,6 +49,8 @@ class _SearchBarState extends State<SearchBar> {
                   ..search = textFieldController.text
                   ..listVideos = []
                   ..add(SearchingVideoEvent());
+
+                //  BlocProvider.of<AparatPaginationCubit>(context).fetch = true;
               },
             ),
             suffixIcon: IconButton(
