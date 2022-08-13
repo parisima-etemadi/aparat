@@ -12,4 +12,9 @@ class AparatPaginationLoaded extends AparatPaginationState {
   AparatPaginationLoaded(this.videos);
 }
 
+class AparatPaginationMoreDataLoaded extends AparatPaginationState {
+  final List<VideoModel> videos;
+  AparatPaginationMoreDataLoaded(this.videos);
+}
+
 class AparatPaginationFailed extends AparatPaginationState {}

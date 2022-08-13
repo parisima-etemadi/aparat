@@ -26,10 +26,9 @@ class _SearchResultWidgetState extends State<SearchResultWidget> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    BlocProvider.of<SearchBloc>(context).add(SearchingVideoEvent());
+    // BlocProvider.of<SearchBloc>(context).add(SearchingVideoEvent());
   }
 
-  ScrollController _scrollController = ScrollController();
   bool _showCircularProgressIndicator = true;
 
   @override
@@ -41,85 +40,18 @@ class _SearchResultWidgetState extends State<SearchResultWidget> {
       children: [
         SearchBar(),
         BlocBuilder<SearchBloc, SearchState>(builder: (context, state) {
-          if (state is SearchLoading) {}
           if (state is SearchLoaded) {
-            // loadMoreVideos();
-            // _showCircularProgressIndicator = false;
+            context.read<AparatPaginationCubit>().loadVideos(state.videos);
+
             return AparatPaginationWidget(videoLists: state.videos);
-            //  Expanded(
-            //   child: SingleChildScrollView(
-            //     controller: _scrollController
-            //       ..addListener(() {
-            //         if (_scrollController.position.pixels ==
-            //             _scrollController.position.maxScrollExtent) {
-            //           _showCircularProgressIndicator = true;
-            //           //  Timer(Duration(seconds: 3), () {
-            //           _getMoreInfo();
-            //           //  });
-            //         }
-            //       }),
-            //     child: Column(
-            //       children: [
-            //         GridView.builder(
-            //             physics: NeverScrollableScrollPhysics(),
-            //             shrinkWrap: true,
-            //             itemCount: state.videos.length,
-            //             gridDelegate:
-            //                 const SliverGridDelegateWithFixedCrossAxisCount(
-            //               crossAxisCount: 2,
-            //             ),
-            //             itemBuilder: (BuildContext context, int index) {
-            //               return VideoItemSearchResult(
-            //                 onTap: () {
-            //                   Navigator.push(
-            //                       context,
-            //                       MaterialPageRoute(
-            //                           builder: (context) => BlocProvider(
-            //                                 create: (context) =>
-            //                                     dI<DetailsOfVideoBloc>(),
-            //                                 child: PlayScreenPage(
-            //                                     uid: state.videos[index].uid),
-            //                               )));
-            //                 },
-            //                 index: index,
-            //               videoList: state.videos,
-            //             );
-            //           }),
-            //       if (_showCircularProgressIndicator)
-            //         Center(
-            //           child: CircularProgressIndicator(),
-            //         ),
-            //     ],
-            //   ),
-            // ),
-            //   );
           }
           // if (state is SearchLoading) {
-          //   return CircularProgressIndicator();
+          //   return Center(child: CircularProgressIndicator());
           // }
 
-          return Container();
+          return Text("search state changeged+ $state");
         }),
       ],
     );
-  }
-
-  void _getMoreInfo() async {
-    //show progressbar
-
-    // setState(() {
-
-    // });
-    // print('_showCircularProgressIndicator = ' +
-    //    _showCircularProgressIndicator.toString());
-    Timer(Duration(seconds: 3), () {
-      BlocProvider.of<SearchBloc>(context).add(SearchingVideoEvent());
-    });
-
-    // if (BlocProvider.of<SearchBloc>(context).isfetch) {
-    //  setState(() {
-    //   _showCircularProgressIndicator = false;
-    //  });
-    //  }
   }
 }

@@ -21,7 +21,7 @@ void _inJectVideoRepository() {
       () => VideoDataProviderImp(dio: dI()));
   dI.registerLazySingleton<VideoRepository>(() => VideoRepositoryImp(dI()));
   dI.registerLazySingleton(() => SearchBloc(dI()));
-  //dI.registerLazySingleton(() => AparatPaginationCubit());
+  dI.registerLazySingleton(() => AparatPaginationCubit(videoRepository: dI()));
   dI.registerFactory(() => DetailsOfVideoBloc(videoRepository: dI()));
   dI.registerLazySingleton<Dio>(() => Dio());
 }

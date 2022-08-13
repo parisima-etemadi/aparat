@@ -11,17 +11,17 @@ part 'search_state.dart';
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final VideoRepository videoRepository;
   List<VideoModel> listVideos = [];
-  String search = "hi";
+  String search = "";
   int videoPerPage = 1;
   String uid = "";
-  bool isfetch = false;
+  //bool isfetch = false;
 
   SearchBloc(this.videoRepository) : super(SearchInitial()) {
     on<SearchEvent>((event, emit) async {
       if (event is SearchingVideoEvent) {
         emit(SearchLoading());
         print("SearchingVideoEvent called");
-        isfetch = true;
+        // isfetch = true;
         List<VideoModel> listVideo =
             await videoRepository.getVideoBySearch(search, videoPerPage);
         listVideos.addAll(listVideo);
