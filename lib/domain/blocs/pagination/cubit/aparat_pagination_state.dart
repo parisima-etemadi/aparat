@@ -1,26 +1,12 @@
 part of 'aparat_pagination_cubit.dart';
 
-@immutable
-abstract class AparatPaginationState {}
 
-class AparatPaginationInitial extends AparatPaginationState {}
+@freezed
+class AparatPaginationState with _$AparatPaginationState{
+  const factory AparatPaginationState.initial()=_AparatPaginationInitial;
+  const factory AparatPaginationState.loading()=_AparatPaginationLoading;
+  const factory AparatPaginationState.notFound()=_AparatPaginationNotFound;
+  const factory AparatPaginationState.failed()=_AparatPaginationFailed;
+  const factory AparatPaginationState.loaded({required List<VideoModel> videos,required bool fetch })=_AparatPaginationLoaded;
 
-class AparatPaginationLoading extends AparatPaginationState {}
-
-class AparatPaginationLoaded extends AparatPaginationState {
-  final List<VideoModel> videos;
-  final bool fetch;
-  AparatPaginationLoaded(this.videos, this.fetch);
 }
-
-class AparatPaginationMoreDataLoaded extends AparatPaginationState {
-  final List<VideoModel> videos;
-
-  AparatPaginationMoreDataLoaded(
-    this.videos,
-  );
-}
-
-class AparatPaginationFailed extends AparatPaginationState {}
-
-class AparatPaginationNotFound extends AparatPaginationState{}

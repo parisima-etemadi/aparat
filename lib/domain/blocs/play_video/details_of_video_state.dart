@@ -1,16 +1,13 @@
 part of 'details_of_video_bloc.dart';
 
-@immutable
-abstract class DetailsOfVideoState {}
-
-class DetailsOfVideoInitial extends DetailsOfVideoState {
-
-}
 
 
-class DetailsOfVideoLoadedsuccessfully extends DetailsOfVideoState {
-  VideoDetailModel videoDetailModel;
+@freezed
 
-  DetailsOfVideoLoadedsuccessfully(this.videoDetailModel);
+class DetailsOfVideoState with _$DetailsOfVideoState{
+
+    const factory DetailsOfVideoState.initial() =_DetailsOfVideoInitial;
+    const factory DetailsOfVideoState.Loaded({required VideoDetailModel videoDetailModel}) =_DetailsOfVideoLoaded;
+
 
 }

@@ -18,7 +18,6 @@ class AparatPaginationWidget extends StatefulWidget {
 }
 
 class _AparatPaginationWidgetState extends State<AparatPaginationWidget> {
-  late ScrollController _scrollController;
   int number = 0;
   late AparatPaginationCubit aparatPaginationCubit;
 
@@ -26,7 +25,6 @@ class _AparatPaginationWidgetState extends State<AparatPaginationWidget> {
   @override
   void initState() {
     // TODO: implement initState
-    _scrollController = ScrollController();
     aparatPaginationCubit=dI<AparatPaginationCubit>();
     super.initState();
   }
@@ -34,14 +32,14 @@ class _AparatPaginationWidgetState extends State<AparatPaginationWidget> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AparatPaginationCubit, AparatPaginationState>(
-      builder: (context, state) {
-        print("state in aparat pagination" + state.toString());
-        if (State is AparatPaginationLoading)
-          return CircularProgressIndicator();
-        if (state is AparatPaginationNotFound)
-          return Center(child: Text("ویدیویی برای نمایش وجود ندارد"),);
-        if (state is AparatPaginationLoaded)
-          return Expanded(
+      builder: (context, state) =>state.when(initial:()=>
+        const CircularProgressIndicator()
+       , loading: () {
+            return const CircularProgressIndicator();
+          }, notFound: ()=> Center(child: Text("ویدیویی برای نمایش وجود ندارد"),), failed: ()=>Center(child: Text("failure "),), loaded: (videos,fetch)=>
+
+
+           Expanded(
             child: Container(
               child: Column(
                 children: [
@@ -52,7 +50,7 @@ class _AparatPaginationWidgetState extends State<AparatPaginationWidget> {
                       onLoading: _loadMore,
                       child: GridView.builder(
                           shrinkWrap: true,
-                          itemCount: state.videos.length,
+                          itemCount: videos.length,
                           gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
@@ -65,11 +63,11 @@ class _AparatPaginationWidgetState extends State<AparatPaginationWidget> {
                                     MaterialPageRoute(
                                       builder: (context) =>
                                           PlayScreenPage(
-                                              uid: state.videos[index].uid),
+                                              uid: videos[index].uid),
                                     ));
                               },
                               index: index,
-                              videoList: state.videos,
+                              videoList: videos,
                             );
                           }),
                     ),
@@ -78,20 +76,15 @@ class _AparatPaginationWidgetState extends State<AparatPaginationWidget> {
                 ],
               ),
             ),
-          );
-        if (State is AparatPaginationFailed)
-          return Center(child: Text("failure "),);
-        return Center(
-            child: Text(""));
-      },
+          )),
+
+
 
 
     );
   }
 
   void _loadMore() {
-    number++;
-    print('//////////////// $number');
     context
         .read<AparatPaginationCubit>()
         .loadMoreVideos();

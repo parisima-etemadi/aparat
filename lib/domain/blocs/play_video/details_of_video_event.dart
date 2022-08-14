@@ -1,10 +1,9 @@
+
 part of 'details_of_video_bloc.dart';
 
-@immutable
-abstract class DetailsOfVideoEvent {}
 
-class GetVideoDetails extends DetailsOfVideoEvent {
-  String uid;
+@freezed
+class DetailsOfVideoEvent with _$DetailsOfVideoEvent{
 
-  GetVideoDetails(this.uid);
+  const factory DetailsOfVideoEvent.GetVideoDetails({required String uId})=GetVideoDetails;
 }
