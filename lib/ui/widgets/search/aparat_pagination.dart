@@ -39,44 +39,44 @@ class _AparatPaginationWidgetState extends State<AparatPaginationWidget> {
           }, notFound: ()=> Center(child: Text("ویدیویی برای نمایش وجود ندارد"),), failed: ()=>Center(child: Text("failure "),), loaded: (videos,fetch)=>
 
 
-           Expanded(
-            child: Container(
-              child: Column(
-                children: [
-                  Expanded(
-                    child: SmartRefresher(
-                      controller: aparatPaginationCubit.refreshController,
-                      enablePullUp: true,
-                      onLoading: _loadMore,
-                      child: GridView.builder(
-                          shrinkWrap: true,
-                          itemCount: videos.length,
-                          gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                          ),
-                          itemBuilder: (BuildContext context, int index) {
-                            return VideoItemSearchResult(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          PlayScreenPage(
-                                              uid: videos[index].uid),
-                                    ));
-                              },
-                              index: index,
-                              videoList: videos,
-                            );
-                          }),
-                    ),
-                  ),
-                  // if (state.fetch == true) CircularProgressIndicator()
-                ],
-              ),
-            ),
-          )),
+           Container(
+             child: Column(
+               children: [
+                 Expanded(
+                   child: SmartRefresher(
+                     controller: aparatPaginationCubit.refreshController,
+
+                     enablePullDown: true,
+                     onLoading: _loadMore,
+
+                     child: GridView.builder(
+                         shrinkWrap: true,
+                         itemCount: videos.length,
+                         gridDelegate:
+                         const SliverGridDelegateWithFixedCrossAxisCount(
+                           crossAxisCount: 2,
+                         ),
+                         itemBuilder: (BuildContext context, int index) {
+                           return VideoItemSearchResult(
+                             onTap: () {
+                               Navigator.push(
+                                   context,
+                                   MaterialPageRoute(
+                                     builder: (context) =>
+                                         PlayScreenPage(
+                                             uid: videos[index].uid),
+                                   ));
+                             },
+                             index: index,
+                             videoList: videos,
+                           );
+                         }),
+                   ),
+                 ),
+                 // if (state.fetch == true) CircularProgressIndicator()
+               ],
+             ),
+           )),
 
 
 
@@ -88,5 +88,11 @@ class _AparatPaginationWidgetState extends State<AparatPaginationWidget> {
     context
         .read<AparatPaginationCubit>()
         .loadMoreVideos();
+  }
+
+  void _refresh() {
+    context
+        .read<AparatPaginationCubit>()
+        .refreshLoading();
   }
 }

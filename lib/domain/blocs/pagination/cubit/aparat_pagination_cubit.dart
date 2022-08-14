@@ -48,4 +48,9 @@ class AparatPaginationCubit extends Cubit<AparatPaginationState> {
 
 
   }
+
+  void refreshLoading(){
+
+    refreshController.refreshToIdle();
+  }
 }
