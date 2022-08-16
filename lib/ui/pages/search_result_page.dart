@@ -14,7 +14,7 @@ class SearchResultPage extends StatelessWidget {
         child: Scaffold(
       body: BlocProvider<AparatPaginationCubit>(
         create: (BuildContext context) => dI<AparatPaginationCubit>(),
-        child: SearchResultWidget(),
+        child: const SearchResultWidget(),
       ),
     ));
   }

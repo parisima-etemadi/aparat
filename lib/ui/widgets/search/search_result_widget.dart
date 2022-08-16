@@ -1,10 +1,7 @@
-
-
 import 'package:flutter/material.dart';
 
 import 'aparat_pagination.dart';
 import 'search_bar.dart';
-
 
 class SearchResultWidget extends StatefulWidget {
   const SearchResultWidget({Key? key}) : super(key: key);
@@ -17,9 +14,9 @@ class _SearchResultWidgetState extends State<SearchResultWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
+      children: const [
         SearchBar(),
-      AparatPaginationWidget( ),
+        Expanded(child: AparatPaginationWidget()),
       ],
     );
   }

@@ -23,11 +23,13 @@ class _SearchBarState extends State<SearchBar> {
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(5)),
       child: TextField(
+        key: Key("searchKey"),
         controller: textFieldController,
         decoration: InputDecoration(
             prefixIcon: IconButton(
-              icon: Icon(Icons.search),
+              icon: Icon(Icons.search,key: Key("searchIconKey"),),
               onPressed: () {
+                print("=====onPressed=======");
                 if (textFieldController.text.isEmpty) {
                   // context.read()<SearchBloc>.add(SearchingVideo(textFieldController.text).)
                   Scaffold.of(context).showSnackBar(SnackBar(
@@ -44,7 +46,7 @@ class _SearchBarState extends State<SearchBar> {
                   BlocProvider.of<AparatPaginationCubit>(context)
                     ..oldListVideos=[]
                     ..searchKey=textFieldController.text
-                    ..perpage=1
+                    ..perPage=1
                 ..loadMoreVideos();
               },
             ),

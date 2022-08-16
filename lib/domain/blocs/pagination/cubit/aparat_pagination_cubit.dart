@@ -1,9 +1,8 @@
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'dart:developer' as developer;
 import '../../../../data/repositories/video_repository.dart';
 import '../../../models/search/video_model.dart';
 
@@ -14,43 +13,33 @@ class AparatPaginationCubit extends Cubit<AparatPaginationState> {
       : super(const AparatPaginationState.initial());
   final VideoRepository videoRepository;
   List<VideoModel> oldListVideos = [];
-  RefreshController refreshController = RefreshController();
 
   bool fetch = true;
-  int perpage = 1;
+  int perPage = 1;
 
   String searchKey = "";
 
-  void loadVideos(List<VideoModel> listVideo) async {
-    emit(const AparatPaginationState.loading());
-    oldListVideos = listVideo;
-
-    emit(AparatPaginationState.loaded(videos:listVideo, fetch:true));
-  }
-
   void loadMoreVideos() async {
-
-
     final listVideo =
-        await videoRepository.getVideoBySearch(searchKey, perpage);
-
+        await videoRepository.getVideoBySearch(searchKey, perPage);
+    perPage++;
     if (listVideo.isEmpty) {
-      emit(AparatPaginationState.notFound());
-      refreshController.loadNoData();
+      emit(const AparatPaginationState.notFound());
     } else {
+      emit(AparatPaginationState.loading());
       oldListVideos.addAll(listVideo);
-      developer.log(oldListVideos.length.toString(), name: 'lisvideo 32');
-      emit(AparatPaginationState.loaded(videos:listVideo, fetch:true));
-      refreshController.loadComplete();
-
-      perpage++;
+      emit(AparatPaginationState.loaded(videos:oldListVideos, fetch:true));
     }
+  }
+  void refreshVideos() async {
+    emit(AparatPaginationState.loading());
+    oldListVideos = [];
+    final listVideo =
+    await videoRepository.getVideoBySearch(searchKey, 1);
 
+    oldListVideos=listVideo;
+      emit(AparatPaginationState.loaded(videos:listVideo, fetch:true));
 
   }
 
-  void refreshLoading(){
-
-    refreshController.refreshToIdle();
-  }
 }
